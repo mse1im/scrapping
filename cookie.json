@@ -1,0 +1,30 @@
+[
+    {
+      "name": "XSRF-TOKEN",
+      "value": "eyJpdiI6ImRlalZPWXVUaWZqTjVKRDBrWUNUWGc9PSIsInZhbHVlIjoiVHpQNiszTEZINGRGeENSZTNUaDRGZ3dpa2t6Uk41SUpqMit2M2NLdE5rcml0aDgwQmt6NmFPMUFLNHlJWDFXOG5oUnRwK3Vjd0hkMmxLcThBeDJ1c2lqU1YxTVF4TlZlbmI4TnJvTWZZS3FwVzloOVZrR0s5bG81aU41TXlDVzIiLCJtYWMiOiJhNzA5MzZmZTBmZWIyYjVkNjM4NTgxMTZjOTA5Y2RiMjhhOWJkNjFjOGViNmViMDk3ZTUyNDkzNmViYmU0MDBiIiwidGFnIjoiIn0%3D",
+      "domain": "www.tikleap.com",
+      "path": "/",
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikleap_session",
+      "value": "eyJpdiI6IlVlUmsvbVJDemw5VEt0RFIvaDJYTUE9PSIsInZhbHVlIjoiY250Ui83UHNsZUUvWEFNVVBEVDJhZ2FHM0k1eS9iQ09GZGFqcTk1UkFvUWdwNSt1MEd5RXRWN0RlZzV3SUY5eC9FMWljaHJwNEk5OTZjajYyU2N6OTlWM1h3d2w2RXNBOVYxVGNmUndES3lrUjJGNkxhWmpWUkl2SHVkZXlNYUoiLCJtYWMiOiJmYWYzZjE5MzdlZTA1NTM4Y2I0MDA0MzEyNjZjZjI5YmNhNDQ3ZjU4NzA4OGE2ZjZmNjI3YmM0YzVmZDczZDgyIiwidGFnIjoiIn0%3D",
+      "domain": "www.tikleap.com",
+      "path": "/",
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "cf_clearance",
+      "value": "acHLDgMPO8iknzMSBcxZaMyiLMB82wCFOsgWXuZhVrg-1745874268-1.2.1.1-Xk54FlJvq2DVUxQ_veYt7VvE17eP_6xveit4vOPrirKr9oy6WjtA9sG44H1bCW0x_mSuPG1hJbPFr6a82VZYi3elaK94_tqZmORK6Og7MNXqiLYQDUXe2Tb3YUYLLiwTLEdKGY0rCV9BY5DpGRPd.XdA3lcmSRs14CNoRGX4BPD.fMcQgWYc.zn6fUdc09Z_n6go5obacZ5fTxThe5l4e4mqL62b4L.zGmQ8DMpdpzg._zasjOd4A0W7V7ax7KzYMTIZ0HKKqjlkpl3gDA2hhEW.ch7NDLMWIy0TDqPUdbQsYS4YScP806ttxf_B0Hm.1kHBRlFjo3BVGkI6kovB4C8wf5A6s4YvXTweg7AisLDTeJkFBWWZYQC1In5s1QBf",
+      "domain": "www.tikleap.com",
+      "path": "/",
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ]
+  
