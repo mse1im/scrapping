@@ -2,15 +2,14 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const he = require('he');
 const cheerio = require('cheerio');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 const path = require('path');
 
-// Ayarlar
 const MIN_DELAY = 4000;
 const MAX_DELAY = 6000;
 const PAGE_LIMIT = 5;
-const EMPTY_PAGE_RETRY_WAIT = 3 * 60 * 1000; // 3 dakika
-const RESTART_WAIT = 12 * 60 * 1000; // 12 dakika
+const EMPTY_PAGE_RETRY_WAIT = 10 * 60 * 1000; // 10 dakika
+const RESTART_WAIT = 20 * 60 * 1000; // 20 dakika
 
 const COOKIES_PATH = 'cookie.json';
 const BACKUP_COOKIES_PATH = 'cookie_base.json';
@@ -46,6 +45,15 @@ function ensureFolders() {
   if (!fs.existsSync('logs')) fs.mkdirSync('logs');
 }
 
+function restartBot(delay) {
+  console.log(`\n⏳ ${delay / 1000} saniye sonra bot yeniden başlatılıyor...\n`);
+  setTimeout(() => {
+    console.clear();
+    console.log('🚀 Bot yeniden başlatılıyor...\n');
+    spawn('node', ['chrome.js'], { stdio: 'inherit', shell: true });
+  }, delay);
+}
+
 async function restoreCookies() {
   if (fs.existsSync(BACKUP_COOKIES_PATH)) {
     fs.copyFileSync(BACKUP_COOKIES_PATH, COOKIES_PATH);
@@ -66,7 +74,7 @@ async function runBot() {
     const browser = await chromium.launch({
       headless: false,
       slowMo: 50,
-      executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' // Mac için yol
     });
 
     const context = await browser.newContext();
@@ -93,9 +101,9 @@ async function runBot() {
       if (status === 403 || status === 401) {
         await browser.close();
         logError(`Sayfa ${i} için ${status} hatası: Cookie geçersiz.`);
-        console.log(`🔁 Cookie geçersiz. 3 dk sonra eski cookie ile yeniden deneniyor...`);
+        console.log(`🔁 Cookie geçersiz. 10 dk sonra eski cookie ile yeniden deneniyor...`);
         await restoreCookies();
-        return setTimeout(() => exec('node index.js'), EMPTY_PAGE_RETRY_WAIT);
+        return restartBot(EMPTY_PAGE_RETRY_WAIT);
       }
 
       const html = await page.content();
@@ -124,8 +132,9 @@ async function runBot() {
       });
 
       if (bulunan === 0) {
-        console.log(`⚠️ Sayfa ${i} boş geldi. 3 dk bekleniyor, bot yeniden başlatılıyor...`);
-        return setTimeout(() => exec('node index.js'), EMPTY_PAGE_RETRY_WAIT);
+        console.log(`⚠️ Sayfa ${i} boş geldi. 10 dk bekleniyor, bot yeniden başlatılıyor...`);
+        await browser.close();
+        return restartBot(EMPTY_PAGE_RETRY_WAIT);
       }
 
       console.log(`✅ Sayfa ${i} tamamlandı, ${bulunan} kullanıcı bulundu.`);
@@ -139,14 +148,14 @@ async function runBot() {
     }
 
     await browser.close();
-    console.log('\n✅ Tüm işlem tamamlandı! 12 dk sonra tekrar başlayacak.');
-    setTimeout(() => exec('node index.js'), RESTART_WAIT);
+    console.log('\n✅ Tüm işlem tamamlandı! 20 dk sonra tekrar başlayacak.');
+    restartBot(RESTART_WAIT);
 
   } catch (error) {
     logError(error.message);
-    console.log('\n⏳ Hata sonrası 3 dk bekleniyor ve bot yeniden başlatılıyor...');
+    console.log('\n⏳ Hata sonrası 10 dk bekleniyor ve bot yeniden başlatılıyor...');
     await restoreCookies();
-    setTimeout(() => exec('node index.js'), EMPTY_PAGE_RETRY_WAIT);
+    restartBot(EMPTY_PAGE_RETRY_WAIT);
   }
 }
 
